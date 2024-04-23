@@ -1,0 +1,95 @@
+#!/bin/bash
+
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+### Settings are automatically loaded as bash variables
+### in every app script context, therefore typically these will exist:
+### - $domain
+### - $path
+### - $language
+### - $install_dir
+### - $port
+### ...
+
+### For remove operations :
+### - the core will deprovision every resource defined in the manifest **after** this script is ran
+### this includes removing the install directory, and data directory (if --purge was used)
+# export COMPOSER_HOME="/home/user/.config/composer"
+
+#=================================================
+# REMOVE SYSTEM CONFIGURATIONS
+#=================================================
+ynh_script_progression --message="Removing system configurations related to $app..." --weight=1
+
+### This should be a symetric version of what happens in the install script
+
+# Remove the service from the list of services known by YunoHost (added from `yunohost service add`)
+if ynh_exec_warn_less yunohost service status "$app" >/dev/null; then
+    ynh_script_progression --message="Removing $app service integration..." --weight=1
+    yunohost service remove "$app"
+fi
+
+# ynh_remove_fail2ban_config
+
+ynh_remove_logrotate
+
+ynh_remove_systemd_config
+
+ynh_remove_nginx_config
+
+ynh_remove_fpm_config
+
+# Remove other various files specific to the app... such as :
+
+# ynh_secure_remove --file="/etc/cron.d/$app"
+
+# ynh_secure_remove --file="/etc/$app"
+
+ynh_secure_remove --file="/var/log/$app"
+
+ynh_secure_remove --file="/etc/php81/conf.d/30-jump.ini" 
+
+ynh_secure_remove --file="/var/www/cache/application"
+
+# Remove app from composer
+
+composer remove $app
+
+# Remove settings
+
+ynh_app_setting_delete --app=$app --key=SITENAME
+ynh_app_setting_delete --app=$app --key=SHOWCLOCK
+ynh_app_setting_delete --app=$app --key=AMPMCLOCK 
+ynh_app_setting_delete --app=$app --key=SHOWGREETING 
+ynh_app_setting_delete --app=$app --key=SHOWSEARCH 
+ynh_app_setting_delete --app=$app --key=ALTLAYOUT 
+ynh_app_setting_delete --app=$app --key=CUSTOMWIDTH 
+ynh_app_setting_delete --app=$app --key=BGBLUR
+ynh_app_setting_delete --app=$app --key=BGBRIGHT
+ynh_app_setting_delete --app=$app --key=UNSPLASHAPIKEY
+ynh_app_setting_delete --app=$app --key=UNSPLASHCOLLECTIONS
+ynh_app_setting_delete --app=$app --key=ALTBGPROVIDER
+ynh_app_setting_delete --app=$app --key=OWMAPIKEY
+ynh_app_setting_delete --app=$app --key=LATLONG
+ynh_app_setting_delete --app=$app --key=METRICTEMP
+ynh_app_setting_delete --app=$app --key=CHECKSTATUS
+ynh_app_setting_delete --app=$app --key=STATUSCACHE
+ynh_app_setting_delete --app=$app --key=CACHEBYPASS
+ynh_app_setting_delete --app=$app --key=WWWURL
+ynh_app_setting_delete --app=$app --key=DISABLEIPV6
+
+ynh_secure_remove --file="$install_dir"
+# ynh_secure_remove --file="$COMPOSER_HOME"
+ynh_secure_remove --file="/home/user/.config/composer"
+ynh_secure_remove --file="/var/www/html/vendor"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression --message="Removal of $app completed" --last

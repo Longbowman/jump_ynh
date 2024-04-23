@@ -1,0 +1,250 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
+packaging_format = 2
+
+id = "jump"
+name = "Jump"
+description.en = "A self-hosted startpage and real-time status page for your server designed to be simple, stylish, fast and secure"
+
+version = "1.0~ynh1"
+
+maintainers = []
+
+[upstream]
+# NB: Only the "license" key is mandatory. Remove entries for which there's no relevant data
+license = "MIT" # you can see the available licenses identifiers list here: https://spdx.org/licenses/
+# website = "https://github.com/daledavies/jump/blob/main/README.md"
+demo = "https://jumpdemo.daledavies.co.uk/"
+# admindoc = "https://yunohost.org/packaging_apps"
+userdoc = "https://github.com/daledavies/jump/blob/main/README.md"
+code = "https://github.com/daledavies/jump/tree/main"
+# cpe = "???"
+
+# fund = "???"
+
+[integration]
+yunohost = ">= 11.2"
+architectures = "all"
+multi_instance = true
+
+ldap = "not_relevant"
+sso = "not_relevant"
+
+
+disk = "50M"
+ram.build = "150M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    # this is a generic question - ask strings are automatically handled by YunoHost's core
+    type = "domain"
+
+    [install.path]
+    # this is a generic question - ask strings are automatically handled by YunoHost's core
+    type = "path"
+    default = "/jump"
+
+    [install.init_main_permission]
+    # this is a generic question - ask strings are automatically handled by YunoHost's core
+    # This won't be saved as setting and will instead be used to initialize the SSOwat permission
+    type = "group"
+    default = "visitors"
+
+    [install.admin]
+    # this is a generic question - ask strings are automatically handled by YunoHost's core
+    type = "user"
+
+    [install.password]
+    # this is a generic question - ask strings are automatically handled by YunoHost's core
+    # Note that user-provided passwords questions are not automatically saved as setting
+    help.en = "Use the help field to add an information for the admin about this question."
+    type = "password"
+    
+    [install.site_name]
+    ask.en = "Site Name"
+    help.en = "Custom site name."
+    type = "string"
+    optional = true
+    
+    [install.show_clock]
+    ask.en = "Show/Hide clock"
+    help.en = "Show/Hide clock."
+    type = "boolean"
+    optional = true
+    default = false
+    
+    [install.am_pm_clock]
+    ask.en = "Clock Format"
+    help.en = "Show 12 hour clock format if true."
+    type = "boolean"
+    optional = true
+    default = true
+    
+    [install.show_greeting]
+    ask.en = "Show Greeting"
+    help.en = "Show/Hide the label \"#home\" instead of a friendly greeting message."
+    type = "boolean"
+    optional = true
+    default = false
+    
+    [install.show_search]
+    ask.en = "Show Search"
+    help.en = "Show/Hide the search button (disable search)."
+    type = "boolean"
+    optional = true
+    default = false
+    
+    [install.alt_layout]
+    ask.en = "Alternative Layout"
+    help.en = "Display list of sites using an alternative layout."
+    type = "boolean"
+    optional = true
+    default = true
+    
+    [install.custom_width]
+    ask.en = "Custom Width"
+    help.en = "Set a custom with for the page container/site list."
+    type = "number"
+    optional = true
+    default = 1000
+    
+    [install.bg_blur]
+    ask.en = "Background Blur"
+    help.en = " Background image blur percentage."
+    type = "number"
+    optional = true
+    default = 50
+    
+    [install.bg_bright]
+    ask.en = "Background Bright"
+    help.en = "Background image brightness percentage."
+    type = "number"
+    optional = true
+    default = 50
+    
+    [install.unsplash_api_key]
+    ask.en = "Unsplash API Key"
+    help.en = "An API key for Unsplash, enables fetching random background images from Unsplash."
+    type = "string"
+    optional = true
+    
+    [install.unsplash_collections]
+    ask.en = "Unsplash Collections"
+    help.en = "List of Unsplash collection ID's (separated by commas) to select random images from."
+    type = "string"
+    optional = true
+    
+    [install.alt_bg_provider]
+    ask.en = "Alternative Background provider URL"
+    help.en = "An alternative background provider url."
+    type = "url"
+    optional = true
+    
+    [install.owm_api_key]
+    ask.en = "OpenWeatherMap API Key"
+    help.en = "An API key for Open Weather Map, LATLONG (below) must also be defined."
+    type = "string"
+    optional = true
+    
+    [install.lat_long]
+    ask.en = "Latitude & Longitude"
+    help.en = "A latitude and longitude for the default location (e.g. \"51.509865,-0.118092\")."
+    type = "string"
+    optional = true
+    
+    [install.metric_temp]
+    ask.en = "Temperature Units"
+    help.en = "Metric (C) (enabled) or imperial (F) (disabled) temperature units."
+    type = "boolean"
+    optional = true
+    default = true
+    
+    [install.check_status]
+    ask.en = "Check Status"
+    help.en = "Disable checking site availability status."
+    type = "boolean"
+    optional = true
+    default = false
+    
+    [install.status_cache]
+    ask.en = "Status Cache"
+    help.en = "Duration in minutes to cache site availability status."
+    type = "string"
+    optional = true
+    default = 5
+    
+    [install.cache_bypass]
+    ask.en = "Cache Bypass"
+    help.en = "Bypass all caches, useful for testing changes."
+    type = "boolean"
+    optional = true
+    default = true
+    
+    [install.www_url]
+    ask.en = "WWW URL"
+    help.en = "Useful if Jump is hosted in a sub-directory (e.g. \"/startpage\")."
+    type = "url"
+    optional = true
+    
+    [install.disable_ip6]
+    ask.en = "Disable IPV6"
+    help.en = "Disable IPV6 if required."
+    type = "boolean"
+    optional = true
+
+[resources]
+    # See the packaging documentation for the full set
+    # of explanation regarding the behavior and properties for each of those
+
+    [resources.sources]
+
+    [resources.sources.main]
+    # This will pre-fetch the asset which can then be deployed during the install/upgrade scripts with :
+    #    ynh_setup_source --dest_dir="$install_dir"
+    # You can also define other assets than "main" and add --source_id="foobar" in the previous command
+    url = "https://github.com/daledavies/jump/archive/refs/tags/v1.3.2.zip"
+    sha256 = "d4003fa5f668e27de7b6c39dcff9b73f4ee7179059caac5be441194fa6b3b0c9"
+    in_subdir = false
+    autoupdate.strategy = "latest_github_release"
+    autoupdate.asset = "^v[0-9\\.\\-]*zip$"
+
+    # These infos are used by https://github.com/YunoHost/apps/blob/master/tools/autoupdate_app_sources/autoupdate_app_sources.py
+    # to auto-update the previous asset urls and sha256sum + manifest version
+    # assuming the upstream's code repo is on github and relies on tags or releases
+    # See the 'sources' resource documentation for more details
+
+    # autoupdate.strategy = "latest_github_tag"
+
+    [resources.system_user]
+    # This will provision/deprovision a unix system user
+
+    [resources.install_dir]
+    dir = "/var/www/html"
+    # This will create/remove the install dir as /var/www/$app
+    # and store the corresponding setting $install_dir
+
+    [resources.data_dir]
+    # This will create/remove the data dir as /home/yunohost.app/$app
+    # and store the corresponding setting $data_dir
+
+    [resources.permissions]
+    # This will configure SSOwat permission for $domain/$path/
+    # The initial allowed group of user is configured via the init_main_permission question (public=visitors, private=all_users)
+    main.url = "/"
+    main.allowed = "visitors"
+
+    [resources.ports]
+    # This will pick a random port for reverse-proxying and store it as the $port setting
+    main.default = 8080
+    main.exposed = true
+    
+
+    [resources.apt]
+    # This will automatically install/uninstall the following apt packages
+    # and implicitly define the $phpversion setting as 8.0 (if phpX.Y-foobar dependencies are listed)
+    packages = "mariadb-server, bash, curl, nginx, composer, php8.1, php8.1-bcmath, php8.1-bz2, php8.1-cgi, php8.1-common, php8.1-curl, php8.1-dba, php8.1-dev, php8.1-fpm, php8.1-ldap,  php8.1-mysql, php8.1-mbstring, php8.1-odbc, php8.1-opcache, php8.1-pgsql, php8.1-phpdbg, php8.1-pspell, php8.1-readline, php8.1-snmp, php8.1-soap, php8.1-sqlite3, php8.1-sybase, php8.1-tidy, php8.1-xml, php8.1-xsl, php8.1-zip"
+
+    [resources.database]
+    # This will automatically provision/deprovison a MySQL DB and store the corresponding credentials in settings $db_user, $db_name, $db_pwd
+    type = "mysql"
