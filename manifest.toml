@@ -6,7 +6,7 @@ id = "jump"
 name = "Jump"
 description.en = "A self-hosted startpage and real-time status page for your server designed to be simple, stylish, fast and secure"
 
-version = "1.0~ynh1"
+version = "1.3.2~ynh1"
 
 maintainers = ["Longbowman"]
 
@@ -207,7 +207,7 @@ ram.runtime = "50M"
     sha256 = "d4003fa5f668e27de7b6c39dcff9b73f4ee7179059caac5be441194fa6b3b0c9"
     in_subdir = false
     autoupdate.strategy = "latest_github_release"
-    autoupdate.asset = "^v[0-9\\.\\-]*zip$"
+    # autoupdate.asset = "^v[0-9\\.\\-]*zip$"
 
     # These infos are used by https://github.com/YunoHost/apps/blob/master/tools/autoupdate_app_sources/autoupdate_app_sources.py
     # to auto-update the previous asset urls and sha256sum + manifest version
